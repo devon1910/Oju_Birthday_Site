@@ -1,0 +1,26 @@
+{
+  "name": "oju_birthday_site",
+  "version": "1.0.0",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./css/input.css -o ./css/tailwind.css --watch",
+    "build": "npm run build:css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devon1910/Oju_Birthday_Site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devon1910/Oju_Birthday_Site/issues"
+  },
+  "homepage": "https://github.com/devon1910/Oju_Birthday_Site#readme",
+  "description": "Birthday website for Oju",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
+  }
+}
