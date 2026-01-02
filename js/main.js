@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize hero background image handler immediately
     initHeroBackground();
     initCurrentYear();
+    initMobileVideo();
     
     // Wait for preloader to finish
     window.addEventListener('preloaderComplete', () => {
@@ -30,6 +31,45 @@ document.addEventListener('DOMContentLoaded', () => {
         initPhotoHover();
     }, 2500);
 });
+
+/**
+ * Mobile Video Autoplay Handler
+ */
+function initMobileVideo() {
+    const video = document.getElementById('main-video');
+    if (!video) return;
+    
+    // Try to play immediately
+    const playPromise = video.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            // Autoplay was prevented, try on user interaction
+            console.log('Autoplay prevented, waiting for interaction');
+            
+            // Play on first touch/click anywhere
+            const playOnInteraction = () => {
+                video.play().catch(() => {});
+                document.removeEventListener('touchstart', playOnInteraction);
+                document.removeEventListener('click', playOnInteraction);
+            };
+            
+            document.addEventListener('touchstart', playOnInteraction, { once: true });
+            document.addEventListener('click', playOnInteraction, { once: true });
+        });
+    }
+    
+    // Also try to play when video section comes into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                video.play().catch(() => {});
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    observer.observe(video);
+}
 
 /**
  * Hero Background Image Handler
