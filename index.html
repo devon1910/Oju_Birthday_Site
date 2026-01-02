@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love 💕</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@200;300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#0a0a0a',
+                            900: '#0f0f0f',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                        },
+                        light: {
+                            50: '#ffffff',
+                            100: '#fafafa',
+                            200: '#f5f5f5',
+                            300: '#e5e5e5',
+                        },
+                        rose: {
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'Georgia', 'serif'],
+                        'body': ['Outfit', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-body bg-dark-950 text-light-50 overflow-x-hidden">
+    
+    <!-- ==================== PRELOADER ==================== -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-dark-950 flex items-center justify-center">
+        <!-- Animated Background -->
+        <div class="preloader-bg absolute inset-0">
+            <div class="preloader-circle circle-1"></div>
+            <div class="preloader-circle circle-2"></div>
+            <div class="preloader-circle circle-3"></div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 text-center">
+            <!-- Heartbeat Line -->
+            <div class="heartbeat-container mb-8">
+                <svg class="heartbeat-svg" viewBox="0 0 400 100" preserveAspectRatio="none">
+                    <path class="heartbeat-line" d="M0,50 L100,50 L120,50 L140,20 L160,80 L180,30 L200,70 L220,50 L240,50 L400,50" />
+                    <path class="heartbeat-line-glow" d="M0,50 L100,50 L120,50 L140,20 L160,80 L180,30 L200,70 L220,50 L240,50 L400,50" />
+                </svg>
+            </div>
+            
+            <!-- Animated Heart -->
+            <div class="preloader-heart-container">
+                <div class="preloader-heart">♥</div>
+                <div class="preloader-heart-ring"></div>
+                <div class="preloader-heart-ring ring-2"></div>
+            </div>
+            
+            <!-- Loading Text -->
+            <div class="mt-12">
+                <p class="text-light-300 text-sm tracking-[0.3em] uppercase loading-text">
+                    <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span>
+                </p>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar-container mt-6">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+        
+        <!-- Particles -->
+        <div class="preloader-particles"></div>
+    </div>
+
+    <!-- ==================== CURTAIN REVEAL ==================== -->
+    <div id="curtain-left" class="fixed top-0 left-0 w-1/2 h-full bg-dark-950 z-[99]"></div>
+    <div id="curtain-right" class="fixed top-0 right-0 w-1/2 h-full bg-dark-950 z-[99]"></div>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main id="main-content" class="opacity-0">
+        
+        <!-- Floating Petals Canvas -->
+        <canvas id="petals-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+        
+        <!-- Cursor Effects Container -->
+        <div id="cursor-glow" class="fixed pointer-events-none z-[60]"></div>
+        <div id="sparkle-container" class="fixed inset-0 pointer-events-none z-40"></div>
+
+        <!-- ==================== HERO SECTION ==================== -->
+        <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+            <!-- Background Image -->
+            <div class="hero-bg-image">
+                <img src="assets/images/img_1.png" alt="My Love" class="hero-bg-img" id="hero-bg-img">
+            </div>
+            
+            <!-- Dark Overlay with Gradient -->
+            <div class="hero-overlay"></div>
+            
+            <!-- Floating Orbs -->
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            
+            <!-- Noise Overlay -->
+            <div class="noise-overlay"></div>
+            
+            <!-- Vignette -->
+            <div class="absolute inset-0 vignette"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10 text-center px-6">
+                <!-- Decorative Line -->
+                <div class="decorative-line mx-auto mb-8"></div>
+                
+                <!-- Small Text -->
+                <p class="text-rose-400 text-sm md:text-base tracking-[0.4em] uppercase mb-4 reveal-text">
+                    Happy Birthday
+                </p>
+                
+                <!-- Her Name - Main Heading with Split Animation -->
+                <h1 class="hero-name font-display text-[15vw] md:text-[12vw] lg:text-[10vw] font-medium leading-none mb-6">
+                    <span class="char-reveal">O</span><span class="char-reveal">j</span><span class="char-reveal">u</span>
+                </h1>
+                
+                <!-- Subtitle with Mask Reveal -->
+                <div class="overflow-hidden">
+                    <p class="hero-subtitle font-script text-3xl md:text-5xl text-light-300 mb-8">
+                        My One of 1, 2nd to None
+                    </p>
+                </div>
+                
+                <!-- Typewriter -->
+                <div class="h-12 flex items-center justify-center overflow-hidden">
+                    <p id="typewriter" class="font-body text-base md:text-lg text-light-300/70 max-w-xl"></p>
+                    <span class="typewriter-cursor">|</span>
+                </div>
+                
+                <!-- Decorative Line -->
+                <div class="decorative-line mx-auto mt-12"></div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <p class="text-xs tracking-[0.2em] uppercase text-light-300/50 mt-4">Scroll</p>
+            </div>
+            
+            <!-- Side Text -->
+            <div class="absolute left-6 top-1/2 -translate-y-1/2 hidden lg:block">
+                <p class="vertical-text text-xs tracking-[0.3em] text-light-300/30">CELEBRATING YOU</p>
+            </div>
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 hidden lg:block">
+                <p class="vertical-text text-xs tracking-[0.3em] text-light-300/30">01.02.2026</p>
+            </div>
+        </section>
+
+        <!-- Horizontal Line Divider -->
+        <div class="divider-line"></div>
+
+        <!-- ==================== PHOTO GALLERY SECTION ==================== -->
+        <section id="gallery" class="py-24 md:py-40 relative overflow-hidden">
+            <div class="container mx-auto px-6">
+                <!-- Section Header -->
+                <div class="text-center mb-20 reveal-on-scroll">
+                    <span class="text-rose-400 text-xs tracking-[0.4em] uppercase">Gallery</span>
+                    <h2 class="font-display text-5xl md:text-7xl font-light mt-4 text-gradient">Beautiful You</h2>
+                    <div class="w-16 h-px bg-gradient-to-r from-transparent via-rose-500 to-transparent mx-auto mt-8"></div>
+                </div>
+                
+                <!-- Creative Scattered Photo Layout -->
+                <div class="photo-scatter">
+                    <!-- Photo 1 - Large, tilted left -->
+                    <div class="scatter-photo photo-1 reveal-on-scroll" data-delay="0">
+                        <div class="photo-frame frame-style-1">
+                            <div class="photo-inner">
+                                <img src="assets/images/img_2.jpg" alt="" class="scatter-image">
+                            </div>
+                            <div class="photo-tape tape-1"></div>
+                        </div>
+                        <p class="photo-caption font-script">Her smile ♥</p>
+                    </div>
+                    
+                    <!-- Photo 2 - Medium, tilted right -->
+                    <div class="scatter-photo photo-2 reveal-on-scroll" data-delay="100">
+                        <div class="photo-frame frame-style-2">
+                            <div class="photo-inner">
+                                <img src="assets/images/img_3.jpg" alt="" class="scatter-image">
+                            </div>
+                            <div class="photo-tape tape-2"></div>
+                        </div>
+                        <p class="photo-caption font-script">So beautiful</p>
+                    </div>
+                    
+                    <!-- Photo 3 - Polaroid style -->
+                    <div class="scatter-photo photo-3 reveal-on-scroll" data-delay="150">
+                        <div class="photo-frame frame-polaroid">
+                            <div class="photo-inner polaroid-inner">
+                                <img src="assets/images/img_4.png" alt="" class="scatter-image">
+                            </div>
+                            <div class="polaroid-caption">
+                                <span class="font-script text-dark-800">My favorite</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 4 - Large, slight rotation -->
+                    <div class="scatter-photo photo-4 reveal-on-scroll" data-delay="200">
+                        <div class="photo-frame frame-style-1">
+                            <div class="photo-inner">
+                                <img src="assets/images/img_5.jpg" alt="" class="scatter-image">
+                            </div>
+                            <div class="photo-tape tape-corner"></div>
+                        </div>
+                        <p class="photo-caption font-script">Perfect</p>
+                    </div>
+                    
+                    <!-- Photo 5 - Small, tilted -->
+                    <div class="scatter-photo photo-5 reveal-on-scroll" data-delay="250">
+                        <div class="photo-frame frame-style-2">
+                            <div class="photo-inner">
+                                <img src="assets/images/img_6.jpg" alt="" class="scatter-image">
+                            </div>
+                            <div class="photo-tape tape-1"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 6 - Polaroid -->
+                    <div class="scatter-photo photo-6 reveal-on-scroll" data-delay="300">
+                        <div class="photo-frame frame-polaroid">
+                            <div class="photo-inner polaroid-inner">
+                                <img src="assets/images/img_7.jpg" alt="" class="scatter-image">
+                            </div>
+                            <div class="polaroid-caption">
+                                <span class="font-script text-dark-800">Always</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 7 - Medium -->
+                    <div class="scatter-photo photo-7 reveal-on-scroll" data-delay="350">
+                        <div class="photo-frame frame-style-1">
+                            <div class="photo-inner">
+                                <img src="assets/images/img_8.JPG" alt="" class="scatter-image">
+                            </div>
+                            <div class="photo-tape tape-2"></div>
+                        </div>
+                        <p class="photo-caption font-script">Stunning</p>
+                    </div>
+                    
+                    <!-- Photo 8 - Small accent -->
+                    <div class="scatter-photo photo-8 reveal-on-scroll" data-delay="400">
+                        <div class="photo-frame frame-style-2">
+                            <div class="photo-inner">
+                                <img src="assets/images/img_9.jpg" alt="" class="scatter-image">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="scatter-deco deco-heart-1">♥</div>
+                    <div class="scatter-deco deco-heart-2">♥</div>
+                    <div class="scatter-deco deco-star">✦</div>
+                </div>
+            </div>
+            
+            <!-- Background Accents -->
+            <div class="absolute top-1/4 left-0 w-96 h-96 bg-rose-500/5 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-1/4 right-0 w-80 h-80 bg-light-50/5 rounded-full blur-[100px]"></div>
+        </section>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center bg-dark-950/95 backdrop-blur-xl">
+            <button id="lightbox-close" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-light-50 hover:text-rose-400 transition-colors border border-light-300/20 rounded-full hover:border-rose-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <button id="lightbox-prev" class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-light-50 hover:text-rose-400 transition-colors border border-light-300/20 rounded-full hover:border-rose-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="lightbox-next" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-light-50 hover:text-rose-400 transition-colors border border-light-300/20 rounded-full hover:border-rose-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <img id="lightbox-image" src="" alt="" class="max-w-[85vw] max-h-[85vh] object-contain">
+        </div>
+
+        <!-- ==================== VIDEO SECTION ==================== -->
+        <section id="video" class="py-24 md:py-40 relative overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 dot-pattern opacity-20"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal-on-scroll">
+                    <span class="text-rose-400 text-xs tracking-[0.4em] uppercase">A Glimpse of You</span>
+                    <h2 class="font-display text-5xl md:text-7xl font-light mt-4 text-gradient">You, In Motion</h2>
+                    <div class="w-16 h-px bg-gradient-to-r from-transparent via-rose-500 to-transparent mx-auto mt-8"></div>
+                </div>
+                
+                <!-- Video Container -->
+                <div class="max-w-5xl mx-auto reveal-on-scroll">
+                    <div class="video-container">
+                        <div class="video-frame">
+                            <!-- Corner Accents -->
+                            <div class="corner-accent top-0 left-0"></div>
+                            <div class="corner-accent top-0 right-0 rotate-90"></div>
+                            <div class="corner-accent bottom-0 right-0 rotate-180"></div>
+                            <div class="corner-accent bottom-0 left-0 -rotate-90"></div>
+                            
+                            <!-- Video Player -->
+                            <video class="w-full h-full aspect-video rounded-lg" poster="assets/images/img_4.png" autoplay muted loop>
+                                <source src="assets/videos/video_2.MP4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Background Accents -->
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-500/5 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-light-50/5 rounded-full blur-[100px]"></div>
+        </section>
+
+        <!-- Horizontal Line Divider -->
+        <div class="divider-line"></div>
+
+        <!-- ==================== THINGS I ADORE ABOUT YOU ==================== -->
+        <section id="adore" class="py-24 md:py-40 relative overflow-hidden">
+            <!-- Ambient Background -->
+            <div class="absolute inset-0 adore-bg"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Header -->
+                <div class="text-center mb-20 reveal-on-scroll">
+                    <span class="text-rose-400 text-xs tracking-[0.4em] uppercase">Celebrating You</span>
+                    <h2 class="font-display text-5xl md:text-7xl font-light mt-4 text-gradient">Things I Adore About You</h2>
+                    <div class="w-16 h-px bg-gradient-to-r from-transparent via-rose-500 to-transparent mx-auto mt-8"></div>
+                </div>
+                
+                <!-- Adore Grid -->
+                <div class="adore-grid max-w-5xl mx-auto">
+                    <!-- Card 1 - Large -->
+                    <div class="adore-card adore-large reveal-on-scroll" data-delay="0">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_11.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">01</div>
+                            <div class="adore-icon">✨</div>
+                            <h3 class="adore-title">Your Smile</h3>
+                            <p class="adore-text">The way your whole face lights up when you smile - it's absolutely infectious and makes my heart skip every single time.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="adore-card reveal-on-scroll" data-delay="100">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_12.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">02</div>
+                            <div class="adore-icon">💫</div>
+                            <h3 class="adore-title">Your Intelligence</h3>
+                            <p class="adore-text">Your Literally always top of the class, and you're so smart.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="adore-card reveal-on-scroll" data-delay="150">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_13.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">03</div>
+                            <div class="adore-icon">🦋</div>
+                            <h3 class="adore-title">Your Personality</h3>
+                            <p class="adore-text">The beautiful, free spirit that makes you uniquely you.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="adore-card reveal-on-scroll" data-delay="200">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_14.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">04</div>
+                            <div class="adore-icon">💖</div>
+                            <h3 class="adore-title">Your Heart</h3>
+                            <p class="adore-text">So kind, so caring, so full of love for everyone around you.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 5 - Wide -->
+                    <div class="adore-card adore-wide reveal-on-scroll" data-delay="250">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_15.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">05</div>
+                            <div class="adore-icon">🌟</div>
+                            <h3 class="adore-title">Your Strength</h3>
+                            <p class="adore-text">The incredible strength and resilience you show every single day inspires me more than you'll ever know. You handle everything with such grace.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 6 -->
+                    <div class="adore-card reveal-on-scroll" data-delay="300">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_16.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">06</div>
+                            <div class="adore-icon">🌸</div>
+                            <h3 class="adore-title">Your Beauty</h3>
+                            <p class="adore-text">Inside and out, you are absolutely breathtaking.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 7 -->
+                    <div class="adore-card reveal-on-scroll" data-delay="350">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_17.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">07</div>
+                            <div class="adore-icon">🔥</div>
+                            <h3 class="adore-title">Your Passion</h3>
+                            <p class="adore-text">The fire and passion you bring to everything you do, from class assignments to work,</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 8 -->
+                    <div class="adore-card reveal-on-scroll" data-delay="400">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_18.JPG" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg">
+                            <div class="adore-number">08</div>
+                            <div class="adore-icon">👑</div>
+                            <h3 class="adore-title">Your Confidence</h3>
+                            <p class="adore-text">The way you own who you are - it's magnetic.</p>
+                        </div>
+                        <div class="adore-glow"></div>
+                    </div>
+                    
+                    <!-- Card 9 - Feature -->
+                    <div class="adore-card adore-feature reveal-on-scroll" data-delay="450">
+                        <div class="adore-bg-image">
+                            <img src="assets/images/img_1.png" alt="" class="adore-bg-img">
+                        </div>
+                        <div class="adore-card-inner has-bg feature-bg">
+                            <div class="adore-number">∞</div>
+                            <div class="adore-icon">♥</div>
+                            <h3 class="adore-title">Everything</h3>
+                            <p class="adore-text">I could write a thousand reasons, but the truth is simple: I adore every single thing about you. You are perfect exactly as you are.</p>
+                        </div>
+                        <div class="adore-glow feature-glow"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating Elements -->
+            <div class="absolute top-20 left-10 text-4xl text-rose-500/10 floating-slow">♥</div>
+            <div class="absolute bottom-32 right-16 text-5xl text-light-50/5 floating-medium">✦</div>
+            <div class="absolute top-1/2 right-8 text-3xl text-rose-400/10 floating-fast">♥</div>
+        </section>
+
+        <!-- ==================== LOVE NOTES SECTION ==================== -->
+        <section id="love-notes" class="py-24 md:py-40 relative overflow-hidden">
+            <!-- Gradient Background -->
+            <div class="absolute inset-0 bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Header -->
+                <div class="text-center mb-20 reveal-on-scroll">
+                    <span class="text-rose-400 text-xs tracking-[0.4em] uppercase">From My Heart</span>
+                    <h2 class="font-display text-5xl md:text-7xl font-light mt-4 text-gradient">Love Notes</h2>
+                    <div class="w-16 h-px bg-gradient-to-r from-transparent via-rose-500 to-transparent mx-auto mt-8"></div>
+                </div>
+                
+                <!-- Notes -->
+                <div class="notes-modern max-w-4xl mx-auto space-y-8">
+                    <!-- Note 1 -->
+                    <div class="note-modern reveal-on-scroll">
+                        <div class="note-number">01</div>
+                        <div class="note-content">
+                            <p class="font-script text-2xl md:text-3xl text-light-100 leading-relaxed">
+                                "Thank you for being you... The most amazing person I've ever known."
+                            </p>
+                        </div>
+                        <div class="note-accent"></div>
+                    </div>
+                    
+                    <!-- Note 2 -->
+                    <div class="note-modern reveal-on-scroll" data-delay="100">
+                        <div class="note-number">02</div>
+                        <div class="note-content">
+                            <p class="font-script text-2xl md:text-3xl text-light-100 leading-relaxed">
+                                "For always being patient with me... Even when I'm at my worst."
+                            </p>
+                        </div>
+                        <div class="note-accent"></div>
+                    </div>
+                    
+                    <!-- Note 3 -->
+                    <div class="note-modern reveal-on-scroll" data-delay="200">
+                        <div class="note-number">03</div>
+                        <div class="note-content">
+                            <p class="font-script text-2xl md:text-3xl text-light-100 leading-relaxed">
+                                "You make every day brighter... Just by being in it."
+                            </p>
+                        </div>
+                        <div class="note-accent"></div>
+                    </div>
+                    
+                    <!-- Note 4 -->
+                    <div class="note-modern reveal-on-scroll" data-delay="300">
+                        <div class="note-number">04</div>
+                        <div class="note-content">
+                            <p class="font-script text-2xl md:text-3xl text-light-100 leading-relaxed">
+                                "You my darling, never fail to fill my cloudy day with sun."
+                            </p>
+                        </div>
+                        <div class="note-accent"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating Hearts -->
+            <div class="absolute top-1/4 left-10 text-rose-500/20 text-4xl floating-slow">♥</div>
+            <div class="absolute bottom-1/3 right-10 text-rose-500/10 text-6xl floating-medium">♥</div>
+        </section>
+
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="py-20 relative">
+            <div class="container mx-auto px-6 text-center">
+                <!-- Big Animated Heart -->
+                <div id="main-heart" class="main-heart-container mb-12">
+                    <div class="heart-glow"></div>
+                    <span class="main-heart-icon">♥</span>
+                    <div class="heart-rings">
+                        <div class="heart-ring ring-1"></div>
+                        <div class="heart-ring ring-2"></div>
+                        <div class="heart-ring ring-3"></div>
+                    </div>
+                </div>
+                
+                <!-- Message -->
+                <p class="font-display text-3xl md:text-4xl text-light-100 mb-4">
+                    Happy Birthday, Beautiful
+                </p>
+                <p class="font-script text-xl text-rose-400 mb-12">
+                    Here's to many more years of love and laughter
+                </p>
+                
+                <!-- Divider -->
+                <div class="w-16 h-px bg-light-300/20 mx-auto mb-8"></div>
+                
+                <!-- Signature -->
+                <p class="text-sm text-light-300/40 flex items-center justify-center gap-2">
+                    Made with <span class="text-rose-500 heart-pulse">♥</span> by your Muse, &nbsp; just for you
+                </p>
+                
+                <!-- Year -->
+                <p class="mt-4 text-xs text-light-300/20" id="current-year"></p>
+            </div>
+            
+            <!-- Confetti Container -->
+            <div id="confetti-container" class="fixed inset-0 pointer-events-none z-[90]"></div>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/preloader.js"></script>
+    <script src="js/petals.js"></script>
+    <script src="js/sparkles.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
