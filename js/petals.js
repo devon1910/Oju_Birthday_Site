@@ -184,11 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     if (!prefersReducedMotion) {
-        // Wait for preloader to finish
-        setTimeout(() => {
+        function initPetals() {
+            if (window.petalAnimation) return; // Already initialized
+            
             window.petalAnimation = new PetalAnimation('petals-canvas');
             
-            // Reduce petals when scrolled past hero
             const heroSection = document.getElementById('hero');
             if (heroSection) {
                 window.addEventListener('scroll', () => {
@@ -202,6 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             }
-        }, 3500); // Wait for preloader
+        }
+        
+        // Wait for preloader event
+        window.addEventListener('preloaderComplete', initPetals);
+        
+        // Fallback
+        setTimeout(initPetals, 2500);
     }
 });

@@ -234,9 +234,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     if (!prefersReducedMotion) {
-        setTimeout(() => {
+        function initSparkles() {
+            if (window.sparkleSystem) return; // Already initialized
             window.sparkleSystem = new SparkleSystem();
             window.confettiSystem = new ConfettiSystem('confetti-container');
-        }, 3500);
+        }
+        
+        // Wait for preloader event
+        window.addEventListener('preloaderComplete', initSparkles);
+        
+        // Fallback
+        setTimeout(initSparkles, 2500);
     }
 });

@@ -11,38 +11,49 @@ class Preloader {
         this.mainContent = document.getElementById('main-content');
         this.particlesContainer = document.querySelector('.preloader-particles');
         
-        this.minLoadTime = 3000; // Minimum time to show preloader
+        this.minLoadTime = 1500; // Reduced to 1.5 seconds
+        this.maxLoadTime = 4000; // Maximum 4 seconds no matter what
         this.startTime = Date.now();
+        this.hasHidden = false;
         
         this.init();
     }
     
     init() {
         // Create floating particles
-        this.createParticles();
+        if (this.particlesContainer) {
+            this.createParticles();
+        }
         
-        // Wait for minimum time and page load
+        // Wait for page load
         window.addEventListener('load', () => this.onLoad());
         
         // Fallback if load event already fired
         if (document.readyState === 'complete') {
             this.onLoad();
         }
+        
+        // Maximum timeout - don't wait forever
+        setTimeout(() => {
+            if (!this.hasHidden) {
+                console.log('Preloader max timeout reached');
+                this.hidePreloader();
+            }
+        }, this.maxLoadTime);
     }
     
     createParticles() {
-        const particleCount = 30;
+        const particleCount = 20;
         
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'preloader-particle';
             
-            // Random properties
             const size = Math.random() * 4 + 2;
             const x = Math.random() * 100;
             const y = Math.random() * 100;
-            const delay = Math.random() * 3;
-            const duration = Math.random() * 3 + 3;
+            const delay = Math.random() * 2;
+            const duration = Math.random() * 2 + 2;
             
             particle.style.cssText = `
                 position: absolute;
@@ -59,28 +70,13 @@ class Preloader {
             this.particlesContainer.appendChild(particle);
         }
         
-        // Add keyframe animation
         if (!document.getElementById('particle-styles')) {
             const style = document.createElement('style');
             style.id = 'particle-styles';
             style.textContent = `
                 @keyframes particleFloat {
-                    0%, 100% {
-                        transform: translate(0, 0) scale(1);
-                        opacity: 0.5;
-                    }
-                    25% {
-                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(1.2);
-                        opacity: 1;
-                    }
-                    50% {
-                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(0.8);
-                        opacity: 0.7;
-                    }
-                    75% {
-                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(1.1);
-                        opacity: 0.9;
-                    }
+                    0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+                    50% { transform: translate(10px, -10px); opacity: 1; }
                 }
             `;
             document.head.appendChild(style);
@@ -88,6 +84,8 @@ class Preloader {
     }
     
     onLoad() {
+        if (this.hasHidden) return;
+        
         const elapsed = Date.now() - this.startTime;
         const remaining = Math.max(0, this.minLoadTime - elapsed);
         
@@ -95,91 +93,49 @@ class Preloader {
     }
     
     hidePreloader() {
-        // Phase 1: Fade out preloader content
-        this.preloader.classList.add('hidden');
+        if (this.hasHidden) return;
+        this.hasHidden = true;
         
-        // Phase 2: Open curtains after preloader fades
+        // Phase 1: Fade out preloader
+        if (this.preloader) {
+            this.preloader.classList.add('hidden');
+        }
+        
+        // Phase 2: Open curtains quickly
         setTimeout(() => {
-            this.curtainLeft.classList.add('open');
-            this.curtainRight.classList.add('open');
+            if (this.curtainLeft) this.curtainLeft.classList.add('open');
+            if (this.curtainRight) this.curtainRight.classList.add('open');
             
             // Phase 3: Show main content
             setTimeout(() => {
-                this.mainContent.style.opacity = '1';
-                this.mainContent.style.transition = 'opacity 0.8s ease';
+                if (this.mainContent) {
+                    this.mainContent.style.opacity = '1';
+                    this.mainContent.style.transition = 'opacity 0.5s ease';
+                }
                 
                 // Trigger hero animations
                 this.triggerHeroAnimations();
                 
+                // Dispatch event for other scripts
+                window.dispatchEvent(new CustomEvent('preloaderComplete'));
+                
                 // Remove preloader and curtains from DOM
                 setTimeout(() => {
-                    this.preloader.remove();
-                    this.curtainLeft.remove();
-                    this.curtainRight.remove();
-                }, 1000);
+                    if (this.preloader) this.preloader.remove();
+                    if (this.curtainLeft) this.curtainLeft.remove();
+                    if (this.curtainRight) this.curtainRight.remove();
+                }, 500);
                 
-            }, 500);
+            }, 300);
             
-        }, 800);
+        }, 400);
     }
     
     triggerHeroAnimations() {
-        // Character reveal is handled by CSS, but we can trigger additional effects
         const charElements = document.querySelectorAll('.char-reveal');
-        charElements.forEach((char, index) => {
+        charElements.forEach((char) => {
             char.style.animationPlayState = 'running';
         });
-        
-        // Create initial sparkle burst at center
-        setTimeout(() => {
-            this.createEntranceSparkles();
-        }, 500);
-    }
-    
-    createEntranceSparkles() {
-        const heroName = document.querySelector('.hero-name');
-        if (!heroName) return;
-        
-        const rect = heroName.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'entrance-sparkle';
-                
-                const angle = (i / 20) * Math.PI * 2;
-                const distance = Math.random() * 150 + 50;
-                const endX = Math.cos(angle) * distance;
-                const endY = Math.sin(angle) * distance;
-                
-                sparkle.style.cssText = `
-                    position: fixed;
-                    left: ${centerX}px;
-                    top: ${centerY}px;
-                    width: ${Math.random() * 8 + 4}px;
-                    height: ${Math.random() * 8 + 4}px;
-                    background: radial-gradient(circle, #ffffff, #f43f5e);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    z-index: 100;
-                    transform: translate(-50%, -50%);
-                `;
-                
-                document.body.appendChild(sparkle);
-                
-                // Animate outward
-                requestAnimationFrame(() => {
-                    sparkle.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-                    sparkle.style.transform = `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) scale(0)`;
-                    sparkle.style.opacity = '0';
-                });
-                
-                setTimeout(() => sparkle.remove(), 800);
-                
-            }, i * 30);
-        }
     }
 }
 
@@ -187,4 +143,3 @@ class Preloader {
 document.addEventListener('DOMContentLoaded', () => {
     new Preloader();
 });
-

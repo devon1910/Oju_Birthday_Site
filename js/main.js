@@ -6,18 +6,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize hero background image handler immediately
     initHeroBackground();
+    initCurrentYear();
     
     // Wait for preloader to finish
+    window.addEventListener('preloaderComplete', () => {
+        initTypewriter();
+        initScrollReveal();
+        initLightbox();
+        initEasterEgg();
+        initSmoothScroll();
+        initParallax();
+        initPhotoHover();
+    });
+    
+    // Fallback in case preloader event doesn't fire
     setTimeout(() => {
         initTypewriter();
         initScrollReveal();
         initLightbox();
         initEasterEgg();
-        initCurrentYear();
         initSmoothScroll();
         initParallax();
         initPhotoHover();
-    }, 3500);
+    }, 2500);
 });
 
 /**
